@@ -1,5 +1,7 @@
 # 🐧 Cerințe workflow GitHub Actions – Linux Training
 
+
+## 1)
 ## 📌 Specificații generale
 
 * **Nume workflow:** la alegere (ex: `Linux-Training`)
