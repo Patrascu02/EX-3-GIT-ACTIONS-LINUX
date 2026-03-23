@@ -1,0 +1,50 @@
+name: Auto-Branch-Push
+
+on:
+  workflow_dispatch:
+    inputs:
+      nume_branch:
+        description: "Name of new branch: "
+        type: string
+        required: true
+      mesaj_commit:
+        description: "Message for new commit: "
+        type: string
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone the code
+        uses: actions/checkout@v4
+
+      - name: Config git identity
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github.actions@git.com"
+
+      - name: Create a new branch using inputs
+        run: |
+          git fetch origin
+          git checkout ${{ github.event.inputs.nume_branch }} || git checkout -b ${{ github.event.inputs.nume_branch }}
+
+      - name: Create new file and write in it 
+        run: |
+          touch raport-automat.txt
+          echo "Acest fisier a fost creat pe branch ul ${{github.event.inputs.nume_branch}} automat!" > raport-automat.txt
+          
+      - name: Add and commit file
+        run: |
+          git add .
+          git commit -m "${{github.event.inputs.mesaj_commit}}"
+
+      - name: Push to remote
+        run: |
+          git push origin ${{github.event.inputs.nume_branch}}
+          
