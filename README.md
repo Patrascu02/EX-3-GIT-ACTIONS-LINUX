@@ -1,4 +1,4 @@
-# 🐧 Cerințe workflow GitHub Actions – Linux Training + Auto Branch Push
+# 🐧 Cerințe workflow GitHub Actions – Linux Training + Auto Branch Push + System Report Artifact
 
 ---
 
@@ -10,8 +10,7 @@
 * **Declanșator:** manual (`workflow_dispatch`)
 * **Input:**
 
-  * nume: `nume_utilizator`
-  * obligatoriu (`required: true`)
+  * `nume_utilizator` (obligatoriu)
 * **Sistem de operare:** `ubuntu-latest`
 
 ---
@@ -20,63 +19,41 @@
 
 ### Pasul 1
 
-Să afișeze în log-uri data și ora curentă a sistemului.
-
----
+Afișează în log-uri data și ora curentă a sistemului.
 
 ### Pasul 2
 
-Să afișeze mesajul:
+Afișează mesajul:
 
 ```
 Salutare, [nume_utilizator]! Începem antrenamentul Linux.
 ```
 
-(se va folosi valoarea introdusă în input)
-
----
-
 ### Pasul 3
 
-Să creeze un director numit:
-
-```
-date_sistem
-```
-
----
+Creează un director numit `date_sistem`.
 
 ### Pasul 4
 
-Să creeze un fișier:
-
-```
-date_sistem/info.txt
-```
-
-cu următorul conținut:
+Creează un fișier `info.txt` în directorul `date_sistem` cu textul:
 
 ```
 Acest fișier a fost generat automat de GitHub Actions.
 ```
 
----
-
 ### Pasul 5
 
-Să afișeze în log-uri conținutul directorului `date_sistem`.
-
----
+Afișează în log-uri conținutul directorului `date_sistem`.
 
 ### Pasul 6
 
-Să afișeze în log-uri conținutul fișierului `info.txt`.
+Afișează în log-uri conținutul fișierului `info.txt`.
 
 ---
 
-# 2) 🔹 Auto Branch & Push
+## 2) 🔹 Auto Branch & Push
 
-## 📌 Specificații generale
+### 📌 Specificații generale
 
 * **Nume workflow:** la alegere (ex: `Auto-Branch-Push`)
 * **Declanșator:** manual (`workflow_dispatch`)
@@ -92,58 +69,68 @@ Să afișeze în log-uri conținutul fișierului `info.txt`.
 
 ### Pasul 1
 
-Să aducă codul pe mașina virtuală folosind:
-
-```
-actions/checkout@v4
-```
-
----
+Aduce codul pe mașina virtuală.
 
 ### Pasul 2
 
-Să configureze identitatea Git:
-
-```
-git config user.name "GitHub Actions Bot"
-git config user.email "bot@github.actions"
-```
-
----
+Configurează identitatea Git (user.name și user.email).
 
 ### Pasul 3
 
-Să creeze și să se mute pe un branch nou folosind valoarea din `nume_branch`.
-
----
+Creează și comută pe branch-ul nou folosind valoarea din `nume_branch`.
 
 ### Pasul 4
 
-Să creeze un fișier:
-
-```
-raport-automat.txt
-```
-
-cu conținutul:
+Creează un fișier `raport-automat.txt` cu conținutul:
 
 ```
 Acest fișier a fost creat pe branch-ul [nume_branch]
 ```
 
----
-
 ### Pasul 5
 
-Să adauge și să dea commit fișierului:
-
-```
-git add .
-git commit -m "[mesaj_commit]"
-```
-
----
+Adaugă și dă commit fișierului folosind mesajul din input-ul `mesaj_commit`.
 
 ### Pasul 6
 
-Să facă push la branch-ul nou creat către repository-ul remote (`origin`).
+Fă push la branch-ul nou creat către repository-ul remote.
+
+---
+
+## 3) 🔹 System Report Artifact
+
+### 📌 Specificații generale
+
+* **Nume workflow:** la alegere (ex: `System-Report-Artifact`)
+* **Declanșator:** manual (`workflow_dispatch`)
+* **Sistem de operare:** `ubuntu-latest`
+* **Input:** nu necesită
+
+---
+
+## ⚙️ Pași necesari
+
+### Pasul 1
+
+Aduce codul pe mașina virtuală.
+
+### Pasul 2
+
+Creează un folder pentru rapoarte numit `date_extrase`.
+
+### Pasul 3
+
+Rulează comenzi Linux pentru a investiga sistemul și salvează rezultatele într-un fișier `raport_server.txt` în folderul `date_extrase`:
+
+* Scrie un titlu simplu
+* Află ce sistem de operare rulează
+* Află câtă memorie RAM are calculatorul
+* Află cât spațiu pe hard-disk există
+* Află detalii despre procesor (CPU)
+
+### Pasul 4
+
+Salvează folderul `date_extrase` ca artefact utilizabil în GitHub Actions pentru descărcare.
+
+* Nume artefact: la alegere (ex: `Raportul-Meu-Secret`)
+* Cale artefact: `date_extrase/`
