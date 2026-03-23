@@ -1,0 +1,29 @@
+name: Third ex for practice with linux commands
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone the repo
+        uses: actions/checkout@v4
+
+      - name: Create folder for reports
+        run: mdkir date_extrase
+
+      - name: Investigating the system
+        run: |
+          echo "--- RAPORT MAȘINĂ VIRTUALĂ GITHUB ---" > date_extrase/raport_server.txt
+          uname -a >> date_extrase/raport_server.txt
+          free -h >> date_extrase/raport_server.txt
+          df -h >> date_extrase/raport_server.txt
+          lscpu >> date_extrase/raport_server.txt
+
+      - name: Save artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Raportul-meu-secret
+          path: date_extrase/
