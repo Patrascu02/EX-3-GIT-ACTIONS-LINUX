@@ -1,0 +1,38 @@
+name: EXERCISE FOR LINUX COMMANDS
+
+on:
+  workflow_dispatch: 
+    inputs:
+      nume_utilizator:
+        description: "Numele persoanei care ruleaza acest workflow"
+        type: string
+        required: true
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone the code
+        uses: actions/checkout@v4
+
+      - name: Show  current time and date 
+        run: |
+          echo "Datetime:" date
+
+      - name: Salute the user 
+        run: echo "Salutare, ${{github.event.inputs.nume_utilizator}}! Incepem antrenamentul Linux."
+
+      - name: Create new folder date_sistem
+        run: mkdir date_sistem
+
+      - name: Create new file info.txt inside it and write a mssg in it
+        run: |
+          cd date_sistem
+          touch info.txt
+          echo "Acest fisier a fost generat automat de GH actions." > info.txt
+
+      - name: Print the content inside info.txt
+        run: cat date_sistem/info.txt
+          
+        
